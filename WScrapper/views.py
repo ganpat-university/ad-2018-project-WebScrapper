@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import scrapped
+#from .models import scrapped
 import requests
 from bs4 import BeautifulSoup
 import io
@@ -33,7 +33,7 @@ def WebDriverCall(request):
 		return render(request, 'result.html',{'url':URL})
 	if(Page=="Dynamic"):
 		try:
-			driver = webdriver.Chrome(r"C:\Users\Admin\projects\webScrapper\WScrapper\chromedriver")
+			driver = webdriver.Chrome(r"C:\webDrivers\chromedriver")
 			driver.get(URL)
 			query=r"$(document).ready(function(){$('*').click(function(event){var myClass = $(this).attr('class');alert(myClass);event.preventDefault();event.stopImmediatePropagation();return false;});});function refreshData(){x=1;$('*').click(function(event){var myClass = $(this).attr('class');alert(myClass);event.preventDefault();event.stopImmediatePropagation();return false;});setTimeout(refreshData, x*1000);}refreshData();"
 			driver.execute_script(query)
@@ -74,7 +74,7 @@ def outcome(request):
 	lowestPCount5=0
 
 	if(Page=="Static"):
-		headers ={ "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36"}
+		headers ={ "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36"}
 		page = requests.get(URL, headers=headers)
 		soup = BeautifulSoup(page.text,'lxml')
 
@@ -219,7 +219,7 @@ def FindClassStatic(request):
 	global driver
 	option = webdriver.ChromeOptions()
 	option.add_argument('headless')
-	driver = webdriver.Chrome(r"C:\Users\Admin\projects\webScrapper\WScrapper\chromedriver",options=option)
+	driver = webdriver.Chrome(r"C:\webDrivers\chromedriver",options=option)
 	#driver = webdriver.Chrome(r"C:\Users\Admin\projects\webScrapper\WScrapper\chromedriver")
 	driver.get(URL)
 	query=r"$(document).ready(function(){$('*').click(function(event){var myClass = $(this).attr('class');alert(myClass);event.preventDefault();event.stopImmediatePropagation();return false;});});function refreshData(){x=1;$('*').click(function(event){var myClass = $(this).attr('class');alert(myClass);event.preventDefault();event.stopImmediatePropagation();return false;});setTimeout(refreshData, x*1000);}refreshData();"
@@ -232,8 +232,8 @@ def FindClassStatic(request):
 	f=open("temp.html","a")
 	f.write(str("<script>$(document).ready(function(){$('*').click(function(event){var myClass = $(this).attr('class');alert(myClass);event.preventDefault();event.stopImmediatePropagation();return false;});});function refreshData(){x=1;$('*').click(function(event){var myClass = $(this).attr('class');alert(myClass);event.preventDefault();event.stopImmediatePropagation();return false;});setTimeout(refreshData, x*1000);}refreshData();</script>"))
 	f.close()
-	URL1=r"C:\Users\Admin\Documents\Collegebookspdf\Sem-4\ADPROJECT\webScrapper\temp.html"
-	driver = webdriver.Chrome(r"C:\Users\Admin\projects\webScrapper\WScrapper\chromedriver")
+	URL1=r"D:\Ganpat University\SEM 4\AD\webScrapperFinal-20200515T004450Z-001\webScrapperFinal\temp.html"
+	driver = webdriver.Chrome(r"C:\webDrivers\chromedriver")
 	driver.get(URL1)
 	driver.execute_script(query)
 	return render(request, 'result.html',{'url':URL})
